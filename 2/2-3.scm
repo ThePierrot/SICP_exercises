@@ -2,6 +2,7 @@
 (define (square x) (* x x))
 
 ;point APIs
+
 (define (make-point x y) (cons x y))
 
 (define (x-point point) (car point))
@@ -33,44 +34,44 @@
                  (/ (+ y1 y2) 2))))
 
 
-;rectangle APIs
-(define (make-rect seg1 seg2)
+;trangle APIs
+(define (make-tran seg1 seg2)
   (if (not (equal-point (start-segment seg1)
                           (start-segment seg2)))
       (-1)
       (cons seg1 seg2)))
 
-(define (seg1-rect rect)
-  (car rect))
+(define (seg1-tran tran)
+  (car tran))
 
-(define (seg2-rect rect)
-  (cdr rect))
+(define (seg2-tran tran)
+  (cdr tran))
 
-(define (base-rect rect)
-  (make-segment (end-segment (seg1-rect rect))
-                (end-segment (seg2-rect rect))))
+(define (base-tran tran)
+  (make-segment (end-segment (seg1-tran tran))
+                (end-segment (seg2-tran tran))))
 
-(define (perimeter-rect rect)
-  (+ (length-segment (seg1-rect rect))
-     (length-segment (seg2-rect rect))
-     (length-segment (base-rect rect))))
+(define (perimeter-tran tran)
+  (+ (length-segment (seg1-tran tran))
+     (length-segment (seg2-tran tran))
+     (length-segment (base-tran tran))))
 
-(define (area-rect rect) (let ((a (length-segment (seg1-rect rect)))
-                               (b (length-segment (seg2-rect rect)))
-                               (c (length-segment (base-rect rect)))
-                               (s (/ (perimeter-rect rect) 2)))
+(define (area-tran tran) (let ((a (length-segment (seg1-tran tran)))
+                               (b (length-segment (seg2-tran tran)))
+                               (c (length-segment (base-tran tran)))
+                               (s (/ (perimeter-tran tran) 2)))
                            (sqrt (* s
                               (- s a)
                               (- s b)
                               (- s c)))))
 
-;define a new rectangle
-(define rect1 (make-rect (make-segment (make-point 0 0)
+;define a new trangle
+(define tran1 (make-tran (make-segment (make-point 0 0)
                            (make-point 3 0))
                          (make-segment (make-point 0 0)
                            (make-point 0 4))))
 
 ;tests
-(perimeter-rect rect1)
+(perimeter-tran tran1)
 
-(area-rect rect1)
+(area-tran tran1)
