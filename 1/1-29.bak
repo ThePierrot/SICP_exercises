@@ -1,4 +1,0 @@
-#lang sicp
-
-(define (simpson f a b n)
-  () )
