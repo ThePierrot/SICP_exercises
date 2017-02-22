@@ -1,4 +1,4 @@
-;implement trangle instead of rectangle
+;Implement trangle instead of rectangle.
 
 ;basic function
 (define (square x) (* x x))
