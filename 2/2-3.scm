@@ -2,7 +2,6 @@
 (define (square x) (* x x))
 
 ;point APIs
-
 (define (make-point x y) (cons x y))
 
 (define (x-point point) (car point))
