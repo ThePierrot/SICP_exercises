@@ -2,7 +2,7 @@
 
 This is my personal SICP answers collection. I will hopefully finish most of the exercises in this year(2017).
 
-The interpreter I use is Racket under R5RS setting, I also use the SICP collection library for the sake of implementing some specific problems. 
+The interpreter I use is Racket under R5RS setting. I also use the SICP collection library for the sake of implementing some specific problems. 
 
 Here are the exercises which I think is enlightening:
 
