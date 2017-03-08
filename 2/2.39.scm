@@ -21,5 +21,5 @@
              '() sequence))
 
 ; test
-(reverse1 (list 1 2 3 4))
+(reverse1 '(1 2 3 4))
 (reverse2 (list 1 2 3 4))
