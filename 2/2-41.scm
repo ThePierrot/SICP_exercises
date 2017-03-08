@@ -19,16 +19,18 @@
             (cons x (filter f xs))
             (filter f xs)))))
 
+(define (flatmap proc seq)
+  (accumulate append '() (map proc seq)))
+
 ; generate triples
 (define (pair-gen-tri n)
-  (accumulate append '()
-              (accumulate append '()
-                          (map (lambda (i)
-                                 (map (lambda (j)
-                                        (map (lambda (k) (list i j k))
-                                             (enumerate-interval 1 n)))
-                                      (enumerate-interval 1 n)))
-                               (enumerate-interval 1 n)))))
+  (flatmap (lambda (i)
+             (flatmap (lambda (j)
+                         (map (lambda (k)
+                                (list i j k))
+                              (enumerate-interval 1 n)))
+                       (enumerate-interval 1 n)))
+           (enumerate-interval 1 n)))
 
 ; find unique pairs
 (define (unique-pairs s)
