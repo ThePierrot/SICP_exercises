@@ -1,3 +1,14 @@
+(define (cleaner sequence) 
+  (if (null? (cdr sequence)) 
+      (car sequence) 
+      sequence)) 
+  
+(define (augend x) 
+  (cleaner (cddr x))) 
+  
+(define (multiplicand x) 
+  (cleaner (cddr x)))
+
 (define (variable? x) (symbol? x))
 
 (define (same-variable? v1 v2)
@@ -26,7 +37,7 @@
 
 (define (addend s) (car s))
 
-(define (augend s) (car (cdr (cdr s))))
+;(define (augend s) (car (cdr (cdr s))))
 
 (define (product? x) (if (pair? x)
                          (eq? (car (cdr x)) '*)
@@ -34,7 +45,7 @@
 
 (define (multiplier p) (car p))
 
-(define (multiplicand p) (car (cdr (cdr p))))
+;(define (multiplicand p) (car (cdr (cdr p))))
 
 (define (deriv exp var)
   (cond ((number? exp) 0)
@@ -54,4 +65,4 @@
         (else #f)))
 
 ; test
-(deriv '((x * 3) * (x * 6)) 'x)
+(deriv '(x + 3 * (x + y + 2)) 'x)
