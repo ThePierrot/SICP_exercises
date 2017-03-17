@@ -24,5 +24,5 @@
 ; tests
 (element-of-set? 1 '(1 2 3))
 (adjoin-set 1 '(2 3 4))
-(union-set '(1 1 2 2 3 3) '(2 3 4 4 5 6))
+(union-set'(1 3 5 6 9 14 16) '(3 5 8 11 14 54 78))
 (intersection-set '(1 1 2 2 3 3) '(2 3 4 4 5 6))

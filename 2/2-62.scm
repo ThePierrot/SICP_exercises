@@ -31,19 +31,18 @@
 
 ; implementation
 (define (union-set set1 set2)
-  (define (union-set-iter s b acc)
-    (cond ((null? s)
-            (append acc b))
-           ((< (car s) (car b))
-            (union-set-iter (cdr s) b (append acc (list (car s)))))
-           (else (append acc b))))
   (cond ((null? set1) set2)
         ((null? set2) set1)
-        ((< (car set1) (car set2))
-         (union-set-iter set1 set2 '()))
-        (else (union-set-iter set2 set1 '()))))
+        (else (let ((h1 (car set1))
+                    (h2 (car set2))
+                    (t1 (cdr set1))
+                    (t2 (cdr set2)))
+                (cond ((= h1 h2) (cons h1 (union-set t1 t2)))
+                      ((< h1 h2) (cons h1 (union-set t1 set2)))
+                      (else (cons h2 (union-set set1 t2))))))))
 
 ; tests
+(union-set '(1 3 5 6 9 14 16) '(3 5 8 11 14 54 78))
 (union-set '(1 2 3 4 5) '(4 5 6 7))
 (union-set '(1 2) '(5 6 7))
 (union-set '(1 2 3 4 5) '())
