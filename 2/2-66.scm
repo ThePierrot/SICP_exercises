@@ -93,7 +93,6 @@
                                  right-tree)
       remaining-elts))))))))
 
-; implementation
 (define (union-set set1 set2)
   (list->tree (union-list (tree->list-1 set1)
                           (tree->list-1 set2))))
@@ -102,8 +101,18 @@
   (list->tree (intersection-list (tree->list-1 set1)
                           (tree->list-1 set2))))
 
-; tests
-(define t1 (list->tree '(1 3 5 6 9 14 16)))
-(define t2 (list->tree '(3 5 8 11 14 54 78)))
-(tree->list-1 (union-set t1 t2))
-(tree->list-1 (intersection-set t1 t2))
+; implementation
+(define (lookup-set x set)
+  (cond ((null? set) #f)
+        ((= x (entry set)) #t)
+        ((< x (entry set))
+         (lookup-set x (left-branch set)))
+        (else (lookup-set x (right-branch set)))))
+
+(define t1 (list->tree '(1 3 5 6 9 12 14 16 21 33 38 47)))
+
+; test
+(lookup-set 6 t1)
+(lookup-set 9 t1)
+(lookup-set 0 t1)
+(lookup-set 1231 t1)
