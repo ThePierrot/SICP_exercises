@@ -1,3 +1,8 @@
+ (define (element-of-set? x set) 
+   (cond ((null? set) #f) 
+         ((equal? x (car set)) #t) 
+         (else (element-of-set? x (cdr set))))) 
+
 (define (make-leaf symbol weight)
   (list 'leaf symbol weight))
 
@@ -43,22 +48,38 @@
 (define (choose-branch bit branch)
   (cond ((= bit 0) (left-branch branch))
         ((= bit 1) (right-branch branch))
-        (else "bad bit: CHOOSE-BRANCH")))
+        (else (display "bad bit: CHOOSE-BRANCH"))))
 
-; implementation
-(define (encode-symbol smb tree) 
-  (define (branch-correct? branch)
-    (define (element-of-set? x set) 
-      (cond ((null? set) false) 
-            ((equal? x (car set)) true) 
-            (else (element-of-set? x (cdr set))))) 
-    (if (leaf? branch) 
-        (equal? smb (symbol-leaf branch)) 
-        (element-of-set? smb (symbols branch)))) 
-  (let ((left (left-branch tree)) 
-        (right (right-branch tree))) 
-    (cond ((branch-correct? left) 
-           (if (leaf? left) '(0) (cons 0 (encode-symbol smb left)))) 
-          ((branch-correct? right) 
-           (if (leaf? right) '(1) (cons 1 (encode-symbol smb right)))) 
-          (else (error "symbol does not exist" bit)))))
+(define (encode message tree)
+  (if (null? message)
+      '()
+      (append (encode-symbol (car message) tree)
+              (encode (cdr message) tree))))
+
+;; implementation
+;; dsiplay is used in lieu of error since r5rs mode of racket does not
+;; support error.
+(define (encode-symbol symbol tree) 
+  (if (not (element-of-set? symbol (symbols tree))) 
+      (display "symbol cannot be encoded") 
+      (if (leaf? tree) 
+          '() 
+          (let ((left-set (symbols (left-branch tree))) 
+                (right-set (symbols (right-branch tree)))) 
+            (cond ((element-of-set? symbol left-set) 
+                   (cons 0 (encode-symbol symbol (left-branch tree)))) 
+                  ((element-of-set? symbol right-set) 
+                   (cons 1 (encode-symbol symbol (right-branch tree))))))))) 
+
+; test
+(define sample-tree
+  (make-code-tree (make-leaf 'A 4)
+                  (make-code-tree
+                   (make-leaf 'B 2)
+                   (make-code-tree
+                    (make-leaf 'D 1)
+                    (make-leaf 'C 1)))))
+
+(encode '(A A D A C A B B) sample-tree)
+
+(element-of-set? 'A '(A B))
