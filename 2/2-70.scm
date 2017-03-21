@@ -1,3 +1,8 @@
+ (define (element-of-set? x set) 
+   (cond ((null? set) #f) 
+         ((equal? x (car set)) #t) 
+         (else (element-of-set? x (cdr set))))) 
+
 (define (make-leaf symbol weight)
   (list 'leaf symbol weight))
 
@@ -76,7 +81,24 @@
                                (cadr pair)) ; frequency
                     (make-leaf-set (cdr pairs))))))
 
-; implementation
+(define (encode-symbol symbol tree) 
+  (if (not (element-of-set? symbol (symbols tree))) 
+      (display "symbol cannot be encoded") 
+      (if (leaf? tree) 
+          '() 
+          (let ((left-set (symbols (left-branch tree))) 
+                (right-set (symbols (right-branch tree)))) 
+            (cond ((element-of-set? symbol left-set) 
+                   (cons 0 (encode-symbol symbol (left-branch tree)))) 
+                  ((element-of-set? symbol right-set) 
+                   (cons 1 (encode-symbol symbol (right-branch tree)))))))))
+
+(define (encode message tree)
+  (if (null? message)
+      '()
+      (append (encode-symbol (car message) tree)
+              (encode (cdr message) tree))))
+
 (define (successive-merge leaf-set) 
   (if (= (length leaf-set) 1) 
       (car leaf-set) 
@@ -90,4 +112,15 @@
   (successive-merge (make-leaf-set pairs)))
 
 ; test
-(generate-huffman-tree '((a 1) (b 2) (c 3) (d 4)))
+(define pairs
+  '((NA 16) (YIP 9) (SHA 3) (A 2) (GET 2) (JOB 2) (WAH 1) (BOOM 1)))
+
+(define tree (generate-huffman-tree pairs))
+
+(encode '(Get a job
+              Sha na na na na na na na na
+              Get a job
+              Sha na na na na na na na na
+              Wah yip yip yip yip yip yip yip yip yip
+              Sha boom)
+        tree)
