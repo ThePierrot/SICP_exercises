@@ -71,4 +71,7 @@
   (put 'deriv '(*) deriv-product) 
   (put 'make-product '* 
        (lambda (x y) (tag (make-product x y)))) 
-  'done) 
+  'done)
+
+(install-sum-package)
+(install-product-package)
