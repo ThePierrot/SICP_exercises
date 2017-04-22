@@ -15,4 +15,5 @@ Here are the exercises which I think is enlightening:
 | 2.35   | count leaves of a tree using fold-right abstraction |
 | 2.38   | right fold and left fold                 |
 | 2.42   | 8-Queens Problem                         |
+| 3.19   | Floyd Cycle Detection Algorithm          |                    
 
