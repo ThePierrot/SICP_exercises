@@ -6,7 +6,7 @@
           (begin 
             (set! counted (cons x counted)) 
             1))) 
-    (define (count x) 
+    (define (count x) W
       (if (not (pair? x)) 
           0 
           (+ (count (car x)) 
@@ -18,4 +18,4 @@
 (define second (cons third third)) 
 (define first (cons second second)) 
 
-(count-pairs first)
+(count-pairs firstWW)
