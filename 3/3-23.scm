@@ -1,0 +1,6 @@
+(define (make-deque) (cons nil nil)) 
+(define (front-ptr deque) (car deque)) 
+(define (rear-ptr deque) (cdr deque)) 
+(define (empty-deque? deque) (null? (front-ptr deque))) 
+(define (set-front! deque item) (set-car! deque item)) 
+(define (set-rear! deque item) (set-cdr! deque item)) 
